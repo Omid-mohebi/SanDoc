@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "345821211994",
+    "project_id": "expance-abc11",
+    "storage_bucket": "expance-abc11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345821211994:android:8671865512eab6a32e1763",
+        "android_client_info": {
+          "package_name": "com.omid.expance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "345821211994-hbehit60896t8ms0plifj5coahc0m83t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.omid.expance",
+            "certificate_hash": "fc9db6f9101b1c5899435cbed5846710607281f7"
+          }
+        },
+        {
+          "client_id": "345821211994-8dp2vsfg6r5en5qbrc41saiel3gmnd6m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxe_YEMuq1392SusGENbUv5gvBxXVVqkQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "345821211994-8dp2vsfg6r5en5qbrc41saiel3gmnd6m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
