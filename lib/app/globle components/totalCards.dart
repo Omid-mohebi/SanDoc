@@ -11,11 +11,13 @@ class ExpandedContainer extends StatelessWidget {
     @required this.controller,
     this.type,
     this.currency,
+    this.goto,
   }) : super(key: key);
 
   final TotalController controller;
   final String type;
   final String currency;
+  final VoidCallback goto;
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -23,10 +25,7 @@ class ExpandedContainer extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: GestureDetector(
-          onTap: () {
-            Get.toNamed(type == 'budget' ? Routes.BUDGET : Routes.SPEND,
-                arguments: controller.key1);
-          },
+          onTap: goto,
           child: Container(
             decoration: BoxDecoration(
                 boxShadow: [

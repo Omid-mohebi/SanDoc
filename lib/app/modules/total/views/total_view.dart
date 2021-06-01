@@ -1,4 +1,5 @@
 import 'package:expance/app/globle%20components/totalCards.dart';
+import 'package:expance/app/routes/app_pages.dart';
 import 'package:expance/theme/AppColors.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +33,12 @@ class TotalView extends GetView<TotalController> {
           children: [
             ExpandedContainer(
               controller: controller,
+              goto: () {
+                Get.toNamed(Routes.BUDGET, arguments: {
+                  'key': controller.key1,
+                  'month': controller.selectedMonth
+                });
+              },
               type: 'budget',
               currency: controller.cur == 'afn' ? '؋' : '\$',
             ),
@@ -39,6 +46,12 @@ class TotalView extends GetView<TotalController> {
               controller: controller,
               currency: controller.cur == 'afn' ? '؋' : '\$',
               type: 'spend',
+              goto: () {
+                Get.toNamed(Routes.SPEND, arguments: {
+                  'key': controller.key1,
+                  'month': controller.selectedMonth
+                });
+              },
             ),
             Expanded(
               flex: 1,
@@ -98,6 +111,43 @@ class TotalView extends GetView<TotalController> {
                               .child('spend')
                               .onValue,
                           builder: (context, snapshots) {
+                            if (snapshot.data != null &&
+                                snapshot.data.snapshot.value != null &&
+                                snapshots.data != null &&
+                                snapshots.data.snapshot.value != null) {
+                              if (controller.selects[0].value) {
+                                Future.delayed(Duration.zero, () async {
+                                  controller.btotal.value = 0;
+                                });
+                                Future.delayed(Duration.zero, () async {
+                                  controller.stotal.value = 0;
+                                });
+                                Future.delayed(Duration.zero, () async {
+                                  controller.total.value = 0;
+                                });
+                                snapshot.data.snapshot.value
+                                    .forEach((key, val) {
+                                  Future.delayed(Duration.zero, () async {
+                                    controller.btotal.value =
+                                        controller.btotal.value + val['amount'];
+                                  });
+                                });
+
+                                snapshots.data.snapshot.value
+                                    .forEach((key, val) {
+                                  Future.delayed(Duration.zero, () async {
+                                    controller.stotal.value =
+                                        controller.stotal.value + val['amount'];
+                                  });
+                                });
+                                Future.delayed(Duration.zero, () async {
+                                  controller.total.value =
+                                      controller.btotal.value -
+                                          controller.stotal.value;
+                                });
+                              }
+                            }
+                            // print("llllllll $index");
                             return Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 15),
@@ -110,11 +160,37 @@ class TotalView extends GetView<TotalController> {
                                   }
                                   controller.selects[index].value = true;
                                   if (snapshot.data != null &&
-                                      snapshot.data.snapshot.value != null) {
+                                      snapshot.data.snapshot.value != null &&
+                                      snapshots.data != null &&
+                                      snapshots.data.snapshot.value != null) {
                                     controller.btotal.value = 0;
-
+                                    controller.stotal.value = 0;
                                     controller.total.value = 0;
-
+                                    controller.selectedMonth =
+                                        controller.months[index];
+                                    controller.selectedMonth =
+                                        controller.months[index];
+                                    if (controller.months[index] == "All" ||
+                                        controller.selects[0].value) {
+                                      snapshot.data.snapshot.value
+                                          .forEach((key, val) {
+                                        controller.btotal.value =
+                                            controller.btotal.value +
+                                                val['amount'];
+                                      });
+                                      snapshots.data.snapshot.value
+                                          .forEach((key, val) {
+                                        controller.stotal.value =
+                                            controller.stotal.value +
+                                                val['amount'];
+                                      });
+                                      Future.delayed(Duration.zero, () async {
+                                        controller.total.value =
+                                            controller.btotal.value -
+                                                controller.stotal.value;
+                                      });
+                                      return;
+                                    }
                                     snapshot.data.snapshot.value.forEach(
                                       (key, val) {
                                         if ('${controller.months[index]} 2021' ==
@@ -172,8 +248,7 @@ class TotalView extends GetView<TotalController> {
                                           color: Colors.grey.withOpacity(0.1),
                                           spreadRadius: 7,
                                           blurRadius: 7,
-                                          offset: Offset(0,
-                                              0),
+                                          offset: Offset(0, 0),
                                         ),
                                       ],
                                     ),

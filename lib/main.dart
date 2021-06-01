@@ -19,7 +19,7 @@ void main() async {
       fallbackLocale: LocalizationService.fallbackLocale,
       translations: LocalizationService(),
       debugShowCheckedModeBanner: false,
-      title: "Application",
+      title: "SanDoc",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
     ),

@@ -19,7 +19,6 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-
         title: Text(
           INTL.DateFormat.yMMMEd().format(DateTime.now()),
           style: TextStyle(
@@ -127,7 +126,6 @@ class HomeView extends GetView<HomeController> {
                                 ),
                               )),
                         ),
-
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 15),
@@ -754,8 +752,6 @@ class HomeView extends GetView<HomeController> {
                                                                       onPressed:
                                                                           () async {
                                                                         try {
-                                                                          await InternetAddress.lookup(
-                                                                              'google.com');
                                                                           controller
                                                                               .databaseReference
                                                                               .child(controller.getuser.uid)

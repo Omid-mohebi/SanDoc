@@ -1,3 +1,4 @@
+import 'package:expance/app/modules/total/controllers/total_controller.dart';
 import 'package:expance/theme/AppColors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -12,8 +13,12 @@ class SpendController extends GetxController {
   TextEditingController amountController = TextEditingController();
   TextEditingController initialText = TextEditingController();
   TextEditingController initialamount = TextEditingController();
+  TotalController totalController = TotalController();
+
   var formatted;
-  var key = Get.arguments;
+
+  var arg = Get.arguments;
+  var key;
   var selectedDate = DateTime.now();
   var total = 0.obs;
   selectDate(BuildContext context) async {
@@ -42,6 +47,8 @@ class SpendController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    key = arg['key'];
+    print('ffffffffffffffffffffffffffff ${arg['month']}');
     await databaseReference
         .child(getuser.uid)
         .child('tasks')

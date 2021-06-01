@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 
 class TotalController extends GetxController {
-  var budgetTotal = 0.obs;
+  String selectedMonth = 'All';
   var key1;
   String cur;
   DatabaseReference databaseReference = FirebaseDatabase.instance.reference();
@@ -13,6 +13,7 @@ class TotalController extends GetxController {
   var total = 0.obs;
   List<dynamic> months = [];
   var selects = [
+    true.obs,
     false.obs,
     false.obs,
     false.obs,
@@ -32,7 +33,9 @@ class TotalController extends GetxController {
 
   @override
   void onInit() {
+    Get.put(selectedMonth, tag: 'theMonth');
     super.onInit();
+    months.add(-1);
     var monthNow = DateTime.now().month - 1;
     for (int i = monthNow; i <= 12; i++) {
       if (i == 12) {
@@ -47,6 +50,9 @@ class TotalController extends GetxController {
     print(months);
     for (int i in months) {
       switch (i) {
+        case -1:
+          months[months.indexOf(-1)] = 'All';
+          break;
         case 0:
           months[months.indexOf(0)] = 'Jan';
           break;
@@ -87,7 +93,7 @@ class TotalController extends GetxController {
       }
     }
     print(months);
-    selects[0].value = true;
+    // selects[0].value = true;
     myMap = Get.arguments;
     key1 = myMap['key'];
     cur = myMap['currency'];

@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expance/app/globle%20components/add.dart';
 import 'package:expance/theme/AppColors.dart';
@@ -9,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:expance/app/modules/budget/controllers/budget_controller.dart';
+import 'package:intl/intl.dart' as intl;
 
 class BudgetView extends GetView<BudgetController> {
   @override
@@ -209,19 +208,37 @@ class BudgetView extends GetView<BudgetController> {
                     List<Map<dynamic, dynamic>> itemsMap = [];
 
                     snapshot.data.snapshot.value.forEach((key, val) {
-                      itemsMap.add(
-                        {'itemKey': key, 'itemValue': val},
-                      );
-                      Future.delayed(Duration.zero, () async {
-                        controller.total.value =
-                            controller.total.value + val['amount'];
-                      });
+                      if (controller.arg['month'] == 'All') {
+                        itemsMap.add(
+                          {'itemKey': key, 'itemValue': val},
+                        );
+                        Future.delayed(Duration.zero, () async {
+                          controller.total.value =
+                              controller.total.value + val['amount'];
+                        });
+                        print(itemsMap);
+                      } else {
+                        if ('${controller.arg['month']} 2021' ==
+                            intl.DateFormat.yMMM().format(
+                                DateTime.fromMicrosecondsSinceEpoch(
+                                    val['date'] * 1000000))) {
+                          print('holla');
+                          itemsMap.add(
+                            {'itemKey': key, 'itemValue': val},
+                          );
+                          Future.delayed(Duration.zero, () async {
+                            controller.total.value =
+                                controller.total.value + val['amount'];
+                          });
+                        }
+                      }
 
                       itemsMap.sort((a, b) {
                         return b['itemValue']['date']
                             .compareTo(a['itemValue']['date']);
                       });
                     });
+
                     return Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Container(
@@ -440,7 +457,6 @@ class BudgetView extends GetView<BudgetController> {
                                                                             return;
                                                                           }
                                                                           try {
-                                                                            await InternetAddress.lookup('google.com');
                                                                             controller.databaseReference.child(controller.getuser.uid).child('tasks').child(controller.key).child('budget').child(itemsMap[index]['itemKey']).update(
                                                                               {
                                                                                 'title': controller.initialText.text,
@@ -552,8 +568,6 @@ class BudgetView extends GetView<BudgetController> {
                                                                     onPressed:
                                                                         () async {
                                                                       try {
-                                                                        await InternetAddress.lookup(
-                                                                            'google.com');
                                                                         controller
                                                                             .databaseReference
                                                                             .child(controller

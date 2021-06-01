@@ -1,4 +1,3 @@
-import 'package:expance/app/data/google_auth.dart';
 import 'package:expance/controller/auth)controller.dart';
 import 'package:expance/theme/AppColors.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:expance/app/modules/sign_in/controllers/sign_in_controller.dart'
 import 'package:lottie/lottie.dart';
 
 class SignInView extends GetView<SignInController> {
-  final FireBaseController fireBaseConroller = FireBaseController();
   @override
   Widget build(BuildContext context) {
     Get.put(AuthController());

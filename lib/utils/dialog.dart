@@ -24,7 +24,6 @@ showChangeLangDialog({langChangedCallBack(String languge)}) {
                   title: Center(child: Text(l)),
                   onTap: () async {
                     try {
-                      await InternetAddress.lookup('google.com');
                       databaseReference
                           .child(getuser.uid)
                           .update({'lang': '$l'}).then((value) {

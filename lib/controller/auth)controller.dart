@@ -103,7 +103,10 @@ class AuthController extends GetxController {
 
   // Sign out
   Future<void> signOut() async {
-    await firebaseAuth.signOut();
+    await firebaseAuth
+        .signOut()
+        .then((value) => Get.offAllNamed(Routes.SIGN_IN));
+
     // Utils.whereShouldIGo();
   }
 

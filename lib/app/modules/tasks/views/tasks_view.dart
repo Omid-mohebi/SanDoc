@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:expance/app/globle%20components/add.dart';
 import 'package:expance/app/globle%20components/curIcon.dart';
 import 'package:expance/app/routes/app_pages.dart';
@@ -182,8 +181,7 @@ class TasksView extends GetView<TasksController> {
                                     color: Colors.grey.withOpacity(0.2),
                                     spreadRadius: 7,
                                     blurRadius: 7,
-                                    offset: Offset(
-                                        0, 0),
+                                    offset: Offset(0, 0),
                                   ),
                                 ],
                               ),
@@ -340,8 +338,6 @@ class TasksView extends GetView<TasksController> {
                                                                                           return;
                                                                                         }
                                                                                         try {
-                                                                                          await InternetAddress.lookup('google.com');
-
                                                                                           databaseReference.child(getuser.uid).child('tasks').child(itemsMap[index]['itemKey']).update({
                                                                                             'name': controller.initialText.text,
                                                                                             'currency': controller.curr,
@@ -433,7 +429,6 @@ class TasksView extends GetView<TasksController> {
                                                                               TextButton(
                                                                                 onPressed: () async {
                                                                                   try {
-                                                                                    await InternetAddress.lookup('google.com');
                                                                                     databaseReference.child(getuser.uid).child('tasks').child(itemsMap[index]['itemKey']).remove().then((value) => Get.back());
                                                                                   } catch (e) {
                                                                                     Get.back();
@@ -497,9 +492,9 @@ class TasksView extends GetView<TasksController> {
                             ),
                           ),
                           Container(
-                            child:
-                                Lottie.asset('assets/lot/10687-not-found.json',
-                                    height: 270),
+                            child: Lottie.asset(
+                                'assets/lot/10687-not-found.json',
+                                height: 270),
                           ),
                         ],
                       ),

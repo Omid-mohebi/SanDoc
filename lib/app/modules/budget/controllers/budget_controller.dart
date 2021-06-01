@@ -14,7 +14,8 @@ class BudgetController extends GetxController {
   TextEditingController initialText = TextEditingController();
   TextEditingController initialamount = TextEditingController();
   var formatted;
-  var key = Get.arguments;
+  var arg = Get.arguments;
+  var key;
   var selectedDate = DateTime.now();
   final count = 0.obs;
   var total = 0.obs;
@@ -46,7 +47,7 @@ class BudgetController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-
+    key = arg['key'];
     await databaseReference
         .child(getuser.uid)
         .child('tasks')

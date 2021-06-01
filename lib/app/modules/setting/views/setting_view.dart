@@ -1,3 +1,4 @@
+import 'package:expance/controller/auth)controller.dart';
 import 'package:expance/theme/AppColors.dart';
 import 'package:expance/utils/dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +11,7 @@ import 'package:expance/app/modules/setting/controllers/setting_controller.dart'
 class SettingView extends GetView<SettingController> {
   @override
   Widget build(BuildContext context) {
+    Get.put(AuthController());
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -27,7 +29,7 @@ class SettingView extends GetView<SettingController> {
                 height: 20,
               ),
               Text(
-                (FirebaseAuth.instance.currentUser.displayName).camelCase,
+                (FirebaseAuth.instance.currentUser.displayName).capitalize,
                 style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -98,8 +100,8 @@ class SettingView extends GetView<SettingController> {
                             children: [
                               TextButton(
                                   onPressed: () {
-                                    controller.fireBaseController
-                                        .signOutUser()
+                                    AuthController.to
+                                        .signOut()
                                         .then((value) => Get.back());
                                   },
                                   child: Text(

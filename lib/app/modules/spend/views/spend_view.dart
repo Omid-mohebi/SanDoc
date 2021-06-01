@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expance/app/globle%20components/add.dart';
+import 'package:expance/app/modules/total/controllers/total_controller.dart';
 import 'package:expance/theme/AppColors.dart';
 import 'package:expance/utils/stampChanger.dart';
 import 'package:flutter/material.dart';
@@ -205,18 +206,35 @@ class SpendView extends GetView<SpendController> {
                     List<Map<dynamic, dynamic>> itemsMap = [];
 
                     snapshot.data.snapshot.value.forEach((key, val) {
-                      itemsMap.add(
-                        {'itemKey': key, 'itemValue': val},
-                      );
-                      Future.delayed(Duration.zero, () async {
-                        controller.total.value =
-                            controller.total.value + val['amount'];
-                      });
+                      if (controller.arg['month'] == 'All') {
+                        itemsMap.add(
+                          {'itemKey': key, 'itemValue': val},
+                        );
+                        Future.delayed(Duration.zero, () async {
+                          controller.total.value =
+                              controller.total.value + val['amount'];
+                        });
+                        print(itemsMap);
+                      } else {
+                        if ('${controller.arg['month']} 2021' ==
+                            intl.DateFormat.yMMM().format(
+                                DateTime.fromMicrosecondsSinceEpoch(
+                                    val['date'] * 1000000))) {
+                          print('holla');
+                          itemsMap.add(
+                            {'itemKey': key, 'itemValue': val},
+                          );
+                          Future.delayed(Duration.zero, () async {
+                            controller.total.value =
+                                controller.total.value + val['amount'];
+                          });
+                        }
+                      }
+
                       itemsMap.sort((a, b) {
                         return b['itemValue']['date']
                             .compareTo(a['itemValue']['date']);
                       });
-                      print(itemsMap);
                     });
 
                     return Padding(
@@ -454,9 +472,6 @@ class SpendView extends GetView<SpendController> {
                                                                           return;
                                                                         }
                                                                         try {
-                                                                          await InternetAddress.lookup(
-                                                                              'google.com');
-
                                                                           databaseReference
                                                                               .child(getuser.uid)
                                                                               .child('tasks')
@@ -583,9 +598,6 @@ class SpendView extends GetView<SpendController> {
                                                                   onPressed:
                                                                       () async {
                                                                     try {
-                                                                      await InternetAddress
-                                                                          .lookup(
-                                                                              'google.com');
                                                                       databaseReference
                                                                           .child(getuser
                                                                               .uid)

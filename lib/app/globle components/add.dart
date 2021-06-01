@@ -13,8 +13,7 @@ class Add {
   static addTask(
       {TextEditingController textEditingController, String curr}) async {
     try {
-      await InternetAddress.lookup('google.com');
-      await databaseReference.child(getuser.uid).child('tasks').push().set(
+      databaseReference.child(getuser.uid).child('tasks').push().set(
         {
           'name': textEditingController.text,
           'taskTime': ServerValue.timestamp,
@@ -41,7 +40,6 @@ class Add {
       DateTime selectedDate,
       String type}) async {
     try {
-      await InternetAddress.lookup('google.com');
       databaseReference
           .child(getuser.uid)
           .child('tasks')
