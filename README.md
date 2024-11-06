@@ -2,4 +2,4 @@
 
 A new Flutter project.
 
-SanDox a personal wallet
+SanDoc is a personal wallet
